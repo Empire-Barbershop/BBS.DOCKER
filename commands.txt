@@ -1,0 +1,10 @@
+/****************************************/ 
+          PASOS DOCKER-COMPOSE
+/****************************************/ 
+
+// 1) Se crea la red interna
+docker network create --attachable -d bridge barbershop
+
+// 2) Se correr docker-compose
+docker-compose up -d
+docker ps

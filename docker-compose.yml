@@ -1,0 +1,47 @@
+version: "3.4"
+# Services
+services:
+  # Default
+  barbershop-adminer:
+    image: adminer:latest
+    container_name: barbershop-adminer
+    restart: always
+    environment:
+      - ADMINER_DEFAULT_SERVER=barbershop-database-mysql
+    ports:
+      - "8080:8080"
+    depends_on:
+      - barbershop-database-mysql
+  # DataBase
+  barbershop-database-mongodb:
+    image: mongo:latest
+    container_name: barbershop-database-mongodb
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=barbershop_user
+      - MONGO_INITDB_ROOT_PASSWORD=barbershop
+    volumes:
+      - C:/Barbershop/database/MongoDB/data:/data/db
+      - C:/Barbershop/database/MongoDB/config:/data/configdb
+    ports:
+      - '27017:27017'
+  barbershop-database-mysql:
+    image: mysql:latest
+    container_name: barbershop-database-mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=barbershop
+      - MYSQL_USER=barbershop_user
+      - MYSQL_PASSWORD=barbershop
+      - MYSQL_ROOT_PASSWORD=barbershop
+    volumes:
+      - C:/Barbershop/database/MySQL/data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+# Networks
+networks:
+  default:
+    external:
+      name: barbershop
